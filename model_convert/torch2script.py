@@ -12,14 +12,13 @@
 # limitations under the License.
 # ==============================================================================
 import os
-
 import torch
 
-from models.pmigan_v010 import Model
+from models.pmigan_v030 import Generator
 
 # 0. Define input model weights path and output model weights path.
-src_model_weights_path = os.path.join("weights", "pmigan-v0.1.0.pth")
-dst_model_weights_path = os.path.join("weights", "trace_pmigan-v0.1.0.pth")
+src_model_weights_path = os.path.join("weights", "pmigan-0.3.0.pth")
+dst_model_weights_path = os.path.join("weights", "trace_pmigan-0.3.0.pth")
 
 # 1. PyTorch must define input tensor shape.
 channels = 3
@@ -31,7 +30,7 @@ input_shape = [1, channels, height, width]
 device = torch.device("cpu")
 
 # 3. Define PyTorch model.
-model = Model().to(device)
+model = Generator().to(device)
 
 # 4. Load weights into model.
 state_dict = torch.load(src_model_weights_path, map_location=device)

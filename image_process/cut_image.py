@@ -11,7 +11,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""The image cutting method used in the conventional SR data set adds the offset parameter."""
+"""常规SR数据集中用到的图像切割方法, 加入了偏移量参数."""
 import os
 
 from PIL import Image

@@ -1,4 +1,4 @@
-# Copyright 2021 Dakewe Biotech Corporation. All Rights Reserved.
+# Copyright 2022 Dakewe Biotech Corporation. All Rights Reserved.
 # Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
 #   You may obtain a copy of the License at
@@ -11,15 +11,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-import os
-import random
+import torch
+from model import Discriminator
 
-filenames = os.listdir("LRunknownx4")
-samples = random.sample(filenames, len(filenames) - 1600)
 
-for filename in sorted(samples):
-    print(f"Process `{filename}`.")
-    os.remove(os.path.join("HR",      filename))
-    os.remove(os.path.join("LRunknownx2",  filename))
-    os.remove(os.path.join("LRunknownx4",  filename))
+new_state_dict = Discriminator().state_dict()
+old_state_dict = torch.load("D_x2.pth")
+
+new_list = []
+old_list = []
+
+for k,v in new_state_dict.items():
+    new_list.append(k)
+
+
+for k,v in old_state_dict["params"].items():
+    old_list.append(k)
+
+
+for i in range(len(new_list)):
+    new_state_dict[new_list[i]] = old_state_dict["params"][old_list[i]]
+
+torch.save({"state_dict": new_state_dict}, "Dis_x2.pth.tar")
 
